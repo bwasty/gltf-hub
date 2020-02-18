@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from gltf_models.models import GltfModel
+from gltf_models.serializers import GltfModelSerializer
+
+
+class GltfModelViewSet(viewsets.ModelViewSet):
+    queryset = GltfModel.objects.all()
+    serializer_class = GltfModelSerializer
+    # TODO!!: owner or readonly...
+    # permission_classes =
