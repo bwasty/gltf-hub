@@ -20,8 +20,7 @@ RUN groupadd -r -g 1000 appuser && \
 USER appuser
 RUN echo 'source /app/aliases.sh' >> /home/appuser/.bashrc
 
-# TODO!?
-# WORKDIR /app/gltf_hub
+WORKDIR /app/gltf_hub
 
 # TODO!!: uvicorn or whatever...
 CMD [ "python", "manage.py", "runserver", "0:8000" ]
