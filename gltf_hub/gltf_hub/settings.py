@@ -83,9 +83,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env_var('DB_NAME', 'gltf_hub'),
-        'USER': env_var('DB_USER'),
-        'PASSWORD': env_var('DB_PASSWORD'),
-        'HOST': env_var('DB_HOST'),
+        'USER': env_var('DB_USER', ''),
+        'PASSWORD': env_var('DB_PASSWORD', ''),
+        'HOST': env_var('DB_HOST', ''),
         'PORT': env_var('DB_PORT', 5432),
         'ATOMIC_REQUESTS': True,
         'AUTOCOMMIT': True,

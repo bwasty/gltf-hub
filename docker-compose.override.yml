@@ -3,7 +3,8 @@ version: '3.7'
 
 services:
   app:
-    command: ['python', 'manage.py', 'runserver', '0:8000']
+    build:
+      target: dev
     depends_on:
       - db
     environment:

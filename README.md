@@ -7,7 +7,7 @@ TODO:
 - [ ] upload + gltf viewer compatible download api
 - [ ] django-debug-toolbar
 - [x] ASGI-server
-- [ ] collectstatic / STATIC_ROOT (docker build issue)
+- [x] collectstatic / STATIC_ROOT (docker build issue)
 - [x] real static files solution (-> DEBUG_UVICORN)
 - [ ] split up settings (dev/prod/local)
   - proper secret key handling...
