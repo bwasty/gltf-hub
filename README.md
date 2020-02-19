@@ -4,14 +4,17 @@ TODO:
 - [x] django project
 - [x] django app
 - [ ] models
+- [ ] upload + gltf viewer compatible download api
 - [ ] django-debug-toolbar
 - [x] ASGI-server
-- [ ] collectstatic / STATIC_ROOT
+- [ ] collectstatic / STATIC_ROOT (docker build issue)
+- [x] real static files solution (-> DEBUG_UVICORN)
 - [ ] split up settings (dev/prod/local)
   - proper secret key handling...
 - [ ] logging config
 - [ ] log rotation (docker compose)
 - [ ] file upload limit - traefik?
+- [ ] dev/prod build -> https://docs.docker.com/compose/compose-file/#target
 
 
 unclear

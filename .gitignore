@@ -1,1 +1,4 @@
 __pycache__
+
+# STATIC_ROOT (for `manage.py collectstatic` output)
+static

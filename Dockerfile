@@ -22,8 +22,9 @@ RUN echo 'source /app/aliases.sh' >> /home/appuser/.bashrc
 
 WORKDIR /app/gltf_hub
 
-# TODO!!: collectstatic, which needs STATIC_ROOT
-# - second build stage not used for dev?
+# TODO!!: second build stage not used for dev?
+# TODO!!!: this needs ENV vars...
+#RUN python manage.py collectstatic --noinput
 
 # TODO!: config file? log format?
 CMD [ "uvicorn", "--host", "0", "gltf_hub.asgi:application" ]
