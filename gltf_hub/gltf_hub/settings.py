@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_yasg',
     'gltf_models.apps.GltfModelsConfig',
 ]
 
@@ -138,6 +139,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# TODO!: default is /accounts/login/ - create such a one?
+LOGIN_URL = '/admin/login/'
+LOGOUT_URL = '/api-auth/logout/'
 
 REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

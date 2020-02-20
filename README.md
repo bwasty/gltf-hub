@@ -1,9 +1,14 @@
+## Documentation
+* Browseable API (Django REST framework): http://localhost:8000/
+* OpenAPI
+    - Swagger UI: http://localhost:8000/swagger/
+    - ReDoc: http://localhost:8000/redoc/
 
 
 TODO:
 - [x] django project
 - [x] django app
-- [ ] models
+- [x] basic models
 - [ ] upload + gltf viewer compatible download api
 - [ ] django-debug-toolbar
 - [x] ASGI-server
