@@ -59,8 +59,7 @@ ROOT_URLCONF = 'gltf_hub.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # TODO?: if global templates required: `mkdir ../templates`, add `[os.path.join(BASE_DIR, 'templates')]`,
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
