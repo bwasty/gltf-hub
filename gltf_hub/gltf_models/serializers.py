@@ -15,7 +15,7 @@ class GltfFileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = GltfFile
         # TODO!!: better file serialization - current: http://localhost:8000/media/uploads/Box0.bin
-        fields = ['id', 'url', 'model', 'file']
+        fields = ['id', 'url', 'model', 'uri', 'file']
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

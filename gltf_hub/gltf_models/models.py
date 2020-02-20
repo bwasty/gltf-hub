@@ -17,14 +17,18 @@ class GltfModel(models.Model):
     def owner(self):
         return self.uploader
 
+def _upload_path(instance, filename):
+    return f'models/{instance.model_id}/{filename}'
+
 class GltfFile(models.Model):
     model = models.ForeignKey(GltfModel,
                               on_delete=models.CASCADE,
                               related_name='files')
+    # TODO!!: auto-fill (save?) or remove??
     # the relative URI as specified in the JSON part of the model
     uri = models.CharField(max_length=128)
-    # TODO!!: upload_to callable, containing model id?
-    file = models.FileField(upload_to='uploads/')
+    # TODO!!: prevent duplication.... unique=True noe enough..overriding `save` seems possible
+    file = models.FileField(upload_to=_upload_path)
 
     def __str__(self):
         return self.file.name
