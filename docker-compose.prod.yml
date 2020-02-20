@@ -1,0 +1,8 @@
+services:
+  app:
+    volumes:
+      django-media-root:/app/gltf_hub/media
+
+volumes:
+  # user uploads
+  django-media-root:
