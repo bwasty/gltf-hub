@@ -1,8 +1,38 @@
+version: '3.7'
+
 services:
   app:
     volumes:
-      django-media-root:/app/gltf_hub/media
+      - django-media-root:/app/gltf_hub/media
+    labels:
+      - traefik.enable=true
+
+      # set up router with http->https redirect middleware
+      - "traefik.http.routers.gltf-hub.rule=Host(`gltf-hub.malkut.net`)"
+      - "traefik.http.routers.gltf-hub.entrypoints=web"
+      - "traefik.http.routers.gltf-hub.middlewares=redirect-to-https"
+
+      # 'real' (https only) router
+      - "traefik.http.routers.gltf-hub-secure.rule=Host(`gltf-hub.malkut.net`)"
+      - "traefik.http.routers.gltf-hub-secure.entrypoints=web-secure"
+      - "traefik.http.routers.gltf-hub-secure.middlewares=security-headers"
+      # NOTE: comment for (local) testing without LE
+#      - "traefik.http.routers.gltf-hub-secure.tls.certresolver=le-httpchallenge"
+    networks:
+      - proxy
+      - default
+
+  db:
+    image: postgres:12.2-alpine
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: gltf_hub
+    volumes:
+      # NOTE: only specifying it explicitly to make it a 'named' volume
+      - postgres-data:/var/lib/postgresql/data
 
 volumes:
+  postgres-data:
   # user uploads
   django-media-root:

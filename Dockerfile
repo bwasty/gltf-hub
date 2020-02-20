@@ -16,6 +16,7 @@ RUN groupadd -r -g 1000 appuser && \
 USER appuser
 
 WORKDIR /app/gltf_hub
+EXPOSE 8000
 
 FROM base as dev
 RUN echo 'source /app/aliases.sh' >> /home/appuser/.bashrc

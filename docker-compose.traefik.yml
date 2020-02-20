@@ -1,0 +1,82 @@
+version: '3.7'
+
+services:
+  traefik:
+    image: traefik:v2.1.4
+    command:
+      - --api.insecure=true # TODO!!: TMP
+      - --api.dashboard=true
+
+      - --providers.docker
+      - --providers.docker.exposedByDefault=false
+      - --providers.file.filename=tls_config.yml
+
+      - --entryPoints.web.address=:80
+      - --entryPoints.web-secure.address=:443
+
+      - --accesslog=true
+      # -> http://localhost:8080/metrics
+      # - --metrics.prometheus=true
+
+      - "--certificatesresolvers.le-httpchallenge.acme.httpchallenge=true"
+      - "--certificatesresolvers.le-httpchallenge.acme.httpchallenge.entrypoint=web"
+      # NOTE: uncomment next line for testing
+      # - "--certificatesresolvers.le-httpchallenge.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.le-httpchallenge.acme.email=benny.wasty@gmail.com"
+      - "--certificatesresolvers.le-httpchallenge.acme.storage=/letsencrypt/acme.json"
+
+      - "--log.level=DEBUG"
+
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+
+      - "traefik.http.middlewares.security-headers.headers.customFrameOptionsValue=sameorigin"
+      - "traefik.http.middlewares.security-headers.headers.stsIncludeSubdomains=true"
+      - "traefik.http.middlewares.security-headers.headers.stsPreload=false"
+      - "traefik.http.middlewares.security-headers.headers.stsSeconds=31536000" # 1 year
+
+      # TODO!: script to generate creds to .env file?
+      # NOTE: all dollar signs in the hash need to be doubled for escaping.
+      # To create user:password pair, it's possible to use this command:
+      # echo $(htpasswd -nb user password) | sed -e s/\\$/\\$\\$/g
+      - "traefik.http.middlewares.dashboard-auth.basicauth.users=bw:$$apr1$$TbkQf1JJ$$9X1.z9BKdx8YCvc6RX6X6/"
+
+      - "traefik.http.routers.api.rule=Host(`traefik.malkut.net`)"
+      - "traefik.http.routers.api.entrypoints=web"
+      - "traefik.http.routers.api.middlewares=redirect-to-https,dashboard-auth,security-headers"
+      - "traefik.http.routers.api.service=api@internal"
+
+      - "traefik.http.routers.api-secure.rule=Host(`traefik.malkut.net`)"
+      - "traefik.http.routers.api-secure.entrypoints=web-secure"
+      - "traefik.http.routers.api-secure.middlewares=redirect-to-https,dashboard-auth,security-headers"
+      - "traefik.http.routers.api-secure.service=api@internal"
+      # NOTE: comment for (local) testing without LE
+#      - "traefik.http.routers.api-secure.tls.certresolver=le-httpchallenge"
+
+    ports:
+      - 80:80
+      - 443:443
+      # TODO!!: TMP
+      # The Web UI (enabled by --api.insecure=true)
+      - 8080:8080
+    volumes:
+      # So that Traefik can listen to the Docker events
+      # TODO!!: insecure - see https://docs.traefik.io/providers/docker/#security-note
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - letsencrypt:/letsencrypt
+      - ./traefik_tls_config.yml:/tls_config.yml:ro
+    networks:
+      - proxy
+    logging:
+      options:
+        max-size: '1m'
+        max-file: '10'
+      driver: json-file
+
+networks:
+  proxy:
+
+volumes:
+  letsencrypt:

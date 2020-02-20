@@ -12,6 +12,8 @@ services:
       DB_USER: admin
       DB_PASSWORD: admin
       DB_NAME: gltf_hub
+    ports:
+      - 8000:8000
     volumes:
       - .:/app:rw
       - app-user:/home/appuser
