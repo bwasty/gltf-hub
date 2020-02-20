@@ -13,6 +13,10 @@ class GltfModel(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def owner(self):
+        return self.uploader
+
 class GltfFile(models.Model):
     model = models.ForeignKey(GltfModel,
                               on_delete=models.CASCADE,
@@ -24,3 +28,7 @@ class GltfFile(models.Model):
 
     def __str__(self):
         return self.file.name
+
+    @property
+    def owner(self):
+        return self.model.owner
