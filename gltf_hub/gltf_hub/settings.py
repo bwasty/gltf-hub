@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import os
+import os, sys
 
 from .utils import env_var
 
@@ -41,12 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
+    'debug_toolbar',
     'gltf_models.apps.GltfModelsConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -143,6 +145,38 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # TODO!: default is /accounts/login/ - create such a one?
 LOGIN_URL = '/admin/login/'
 LOGOUT_URL = '/api-auth/logout/'
+
+if env_var('DJANGO_DEBUG_TOOLBAR', '1') == '1' and not 'test' in sys.argv:
+    # TODO!: move to dev settings?
+    def show_debug_toolbar(request):
+        if not DEBUG or 'test' in sys.argv:
+            return False
+        return True
+    DEBUG_TOOLBAR_CONFIG = {
+        'SHOW_TOOLBAR_CALLBACK': 'gltf_hub.settings.show_debug_toolbar',
+        'DISABLE_PANELS': {
+            'debug_toolbar.panels.redirects.RedirectsPanel',
+            'debug_toolbar.panels.headers.HeadersPanel',
+            'debug_toolbar.panels.request.RequestPanel',
+            'debug_toolbar.panels.logging.LoggingPanel',
+        }
+    }
+    # don't show all panels, but keep the lines outcommented in case they become useful
+    DEBUG_TOOLBAR_PANELS = [
+        # 'debug_toolbar.panels.versions.VersionsPanel',
+        'debug_toolbar.panels.timer.TimerPanel',
+        # 'debug_toolbar.panels.settings.SettingsPanel',
+        'debug_toolbar.panels.headers.HeadersPanel',
+        'debug_toolbar.panels.request.RequestPanel',
+        'debug_toolbar.panels.sql.SQLPanel',
+        # 'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+        # 'debug_toolbar.panels.templates.TemplatesPanel',
+        # 'debug_toolbar.panels.cache.CachePanel',
+        # 'debug_toolbar.panels.signals.SignalsPanel',
+        'debug_toolbar.panels.logging.LoggingPanel',
+        'debug_toolbar.panels.redirects.RedirectsPanel',
+        'debug_toolbar.panels.profiling.ProfilingPanel',
+    ]
 
 REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

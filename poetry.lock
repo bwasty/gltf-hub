@@ -96,6 +96,18 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 category = "main"
+description = "A configurable set of panels that display various debug information about the current request/response."
+name = "django-debug-toolbar"
+optional = false
+python-versions = ">=3.5"
+version = "2.2"
+
+[package.dependencies]
+Django = ">=1.11"
+sqlparse = ">=0.2.0"
+
+[[package]]
+category = "main"
 description = "Web APIs for Django, made easy."
 name = "djangorestframework"
 optional = false
@@ -204,6 +216,14 @@ version = "20.1"
 [package.dependencies]
 pyparsing = ">=2.0.2"
 six = "*"
+
+[[package]]
+category = "dev"
+description = "Decorators for profiling/timing/tracing individual functions"
+name = "profilehooks"
+optional = false
+python-versions = "*"
+version = "1.11.1"
 
 [[package]]
 category = "main"
@@ -367,7 +387,7 @@ version = "*"
 brotli = ["brotli"]
 
 [metadata]
-content-hash = "70012ad8e74548e80e12d365f971edf839d35f2cb2f8193a1f7e014b2cbd1973"
+content-hash = "b73993f0ef8874ce7daf673da1c6a8ba86ebe6a0590112f78f97275f40bc745d"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -467,6 +487,10 @@ django = [
     {file = "Django-3.0.3-py3-none-any.whl", hash = "sha256:c91c91a7ad6ef67a874a4f76f58ba534f9208412692a840e1d125eb5c279cb0a"},
     {file = "Django-3.0.3.tar.gz", hash = "sha256:2f1ba1db8648484dd5c238fb62504777b7ad090c81c5f1fd8d5eb5ec21b5f283"},
 ]
+django-debug-toolbar = [
+    {file = "django-debug-toolbar-2.2.tar.gz", hash = "sha256:eabbefe89881bbe4ca7c980ff102e3c35c8e8ad6eb725041f538988f2f39a943"},
+    {file = "django_debug_toolbar-2.2-py3-none-any.whl", hash = "sha256:ff94725e7aae74b133d0599b9bf89bd4eb8f5d2c964106e61d11750228c8774c"},
+]
 djangorestframework = [
     {file = "djangorestframework-3.11.0-py3-none-any.whl", hash = "sha256:05809fc66e1c997fd9a32ea5730d9f4ba28b109b9da71fccfa5ff241201fd0a4"},
     {file = "djangorestframework-3.11.0.tar.gz", hash = "sha256:e782087823c47a26826ee5b6fa0c542968219263fb3976ec3c31edab23a4001f"},
@@ -545,6 +569,10 @@ markupsafe = [
 packaging = [
     {file = "packaging-20.1-py2.py3-none-any.whl", hash = "sha256:170748228214b70b672c581a3dd610ee51f733018650740e98c7df862a583f73"},
     {file = "packaging-20.1.tar.gz", hash = "sha256:e665345f9eef0c621aa0bf2f8d78cf6d21904eef16a93f020240b704a57f1334"},
+]
+profilehooks = [
+    {file = "profilehooks-1.11.1-py2.py3-none-any.whl", hash = "sha256:a4eeb3714e61f5dd47e7a1b1ceb846ff7e32d954d94d868efdc3692cbda05972"},
+    {file = "profilehooks-1.11.1.tar.gz", hash = "sha256:666538299a0b79d5fb3d0bb3c247ab6ea1d29d0f2a28cd08bf127742e0ccfad8"},
 ]
 psycopg2 = [
     {file = "psycopg2-2.8.4-cp27-cp27m-win32.whl", hash = "sha256:72772181d9bad1fa349792a1e7384dde56742c14af2b9986013eb94a240f005b"},
