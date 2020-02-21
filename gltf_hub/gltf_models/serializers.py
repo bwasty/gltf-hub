@@ -9,14 +9,13 @@ class GltfModelSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = GltfModel
-        fields = ['id', 'url', 'created_at', 'name', 'json', 'files', 'uploader']
+        fields = ['id', 'url', 'created_at', 'name', 'files', 'preview_image', 'uploader', 'public']
 
 class GltfFileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = GltfFile
         # TODO!!: better file serialization - current: http://localhost:8000/media/uploads/Box0.bin
         fields = ['id', 'url', 'model', 'uri', 'file']
-
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     gltfmodels = serializers.HyperlinkedRelatedField(many=True, view_name='gltfmodel-detail', read_only=True)
